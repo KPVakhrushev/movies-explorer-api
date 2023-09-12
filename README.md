@@ -3,5 +3,5 @@
 
 ## Ссылки на проект
 IP 158.160.119.102
-https://api.mesto.kavay.ru/
+https://api.movies.kavay.ru/
 
