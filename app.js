@@ -4,12 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
-
-const authRouter = require('./routes/auth');
-const usersRouter = require('./routes/users');
-const moviesRouter = require('./routes/movies');
-
-const auth = require('./middlewares/auth');
+const helmet = require('helmet');
 const cors = require('./middlewares/cors');
 const errors = require('./middlewares/errors');
 const { requestLogger } = require('./middlewares/logger');
@@ -20,16 +15,14 @@ const limiter = rateLimit(LIMITER);
 const app = express();
 mongoose.connect(DB_CONNECTION);
 
-// app.get('/crash-test', () => setTimeout(() => { throw new Error('Сервер сейчас упадёт'); }, 0));
-
+app.use(helmet());
 app.use(requestLogger);
 app.use(limiter);
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }), cookieParser());
-
 app.use(cors);
-app.use('/', authRouter);
-app.use('/users', auth, usersRouter);
-app.use('/movies', auth, moviesRouter);
+
+require('./routes/index')(app);
+
 app.use(errors);
 
 app.listen(PORT, console.log(`App listening on port ${PORT}`));
