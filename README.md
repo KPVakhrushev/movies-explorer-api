@@ -1,1 +1,7 @@
-# movies-explorer-api
+# react-mesto-api-full
+Бэкенд дипломного проекта курса вэб разработчик ЯндекПрактикум
+
+## Ссылки на проект
+IP 158.160.119.102
+https://api.movies.kavay.ru/
+
