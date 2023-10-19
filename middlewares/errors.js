@@ -24,7 +24,7 @@ module.exports = [
   },
   /* ответ с ошибкой */
   (err, req, res, next) => {
-    res.status(err.code).send({ message: err.message });
+    if (!res.writableEnded) res.status(err.code).send({ message: err.message });
     next();
   },
 ];

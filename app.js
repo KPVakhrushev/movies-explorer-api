@@ -17,9 +17,9 @@ mongoose.connect(DB_CONNECTION);
 
 app.use(helmet());
 app.use(requestLogger);
+app.use(cors);
 app.use(limiter);
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }), cookieParser());
-app.use(cors);
 
 require('./routes/index')(app);
 

@@ -9,7 +9,6 @@ module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', CORS_ALLOW_METHODS);
     res.header('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
-
     res.end();
   }
   next();

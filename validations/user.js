@@ -1,12 +1,10 @@
 const {
   Joi, celebrate, Segments, errors,
 } = require('celebrate');
-const { URL_REGEX } = require('../config');
 
 const updateKeys = {
   name: Joi.string().min(2).max(30),
-  about: Joi.string().min(2).max(30),
-  avatar: Joi.string().uri().pattern(URL_REGEX).messages({ '*': 'Invalid URL' }),
+  email: Joi.string().email().required(),
 };
 const authKeys = {
   email: Joi.string().email().required(),
