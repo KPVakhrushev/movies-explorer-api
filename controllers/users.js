@@ -9,6 +9,10 @@ const ErrorDefault = require('../errors/ErrorDefault');
 const { SECRET, TOKEN_EXPIRES_IN } = require('../config');
 const { ERRORS } = require('../constants');
 
+const sendUserWithToken = (res, user)=>{
+  const token = jwt.sign({ _id: user._id }, SECRET, { expiresIn: TOKEN_EXPIRES_IN*1 });
+  res.cookie('jwt', token, { maxAge: TOKEN_EXPIRES_IN * 1000, httpOnly: true }).send(user);
+}
 const sendUserOrError = (user, res, next) => {
   if (user) res.send(user);
   else next(new ErrorNotfound('User not found'));
@@ -27,7 +31,10 @@ module.exports.createUser = (req, res, next) => {
     .then((hash) => User.create({
       email, name, about, avatar, password: hash,
     }))
-    .then((user) => res.status(httpConstants.HTTP_STATUS_CREATED).send(user))
+    .then((user) => {
+      res.status(httpConstants.HTTP_STATUS_CREATED);
+      sendUserWithToken(res, user);
+    })
     .catch((err) => {
       if (err.code === 11000) next(new ErrorConflict(ERRORS.EMAIL_EXIST));
       else next(new ErrorDefault(ERRORS.REGISTRATION));
@@ -59,8 +66,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const authenticated = user && bcrypt.compareSync(password, user.password);
       if (!authenticated) throw new ErrorUnauthorized(ERRORS.BAD_CREDENTIALS);
-      const token = jwt.sign({ _id: user._id }, SECRET, { expiresIn: TOKEN_EXPIRES_IN });
-      res.cookie('jwt', token, { maxAge: TOKEN_EXPIRES_IN * 1000, httpOnly: true }).send(user);
+      sendUserWithToken(res, user);
     })
     .catch(() => next(new ErrorUnauthorized(ERRORS.BAD_CREDENTIALS)));
 };
