@@ -1,12 +1,6 @@
-# react-mesto-api-full
-Back-end часть дипломной работы  курсов [«Веб-разработчик»](https://practicum.yandex.ru/web/) в [Яндекс Практикум](https://practicum.yandex.ru/).
+# backend проекта movies-explorer
+Back-end часть дипломной работы  курса [«Веб-разработчик»](https://practicum.yandex.ru/web/) в [Яндекс Практикум](https://practicum.yandex.ru/).
 
-## Ссылки на проект
-https://api.movies.kavay.ru/
-
-# react-mesto-api-full
-Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями.
-Бэкенд расположен в директории `backend/`, а фронтенд - в `frontend/`.
 
 
 ## Ссылки на проект
